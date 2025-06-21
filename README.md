@@ -2,13 +2,14 @@
 Tiny program to list files in a directory that i made for fun. Not necessarily an ls(1) clone.
 
 ## Installation
-Compile with: (only tested with mosml and mlton)
+Dependencies: mlton (only tested with mosml and mlton)  
+Compile with:
 ```sh
 make install
 ```
 
 ## Usage
-```sh
+```
 list [-h|-r|-p|-i|-f|-d] [path]
   -h   show help and exit
   -r   list directories recursively
