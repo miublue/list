@@ -31,6 +31,7 @@ fun parse_args [] = ()
     parse_args t);
 
 val _ = let
+    (* XXX: allow printing with colors and file type/properties *)
     fun print_file full_path to_print =
         if OS.FileSys.isDir full_path
         then if (!list_dirs) then print (to_print ^ "/\n") else ()
@@ -42,18 +43,21 @@ val _ = let
             val full_path = OS.FileSys.fullPath (path ^ "/" ^ file);
             val to_print = if (!show_full_path) then full_path else file;
         in
-            if not (hd (explode file) = #"." andalso not (!show_hidden))
-            then (print_file full_path to_print;
-                    if OS.FileSys.isDir full_path andalso (!list_recursive)
-                    then list_path full_path else ())
-            else ()
-        end handle OS.SysErr (s,_) => ();
+            if hd (explode file) = #"." andalso not (!show_hidden)
+            then () (* ignore dotfiles if not show_hidden *)
+            else (print_file full_path to_print;
+                  if OS.FileSys.isDir full_path andalso (!list_recursive)
+                  then list_path full_path (* list recursively *)
+                  else ())
+        end handle OS.SysErr (s,_) => (); (* ignore files it cannot list *)
 
         fun list_next stream =
             case OS.FileSys.readDir stream of
               SOME file => (list_file file; list_next stream)
             | NONE => OS.FileSys.closeDir stream
-    in list_next stream end;
+    in
+        list_next stream
+    end;
 in
     parse_args (CommandLine.arguments ());
     list_path (!path)

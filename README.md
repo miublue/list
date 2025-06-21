@@ -2,7 +2,7 @@
 Tiny program to list files in a directory that i made for fun. Not necessarily an ls(1) clone.
 
 ## Installation
-Dependencies: mlton (only tested with mosml and mlton)  
+Dependencies: mosml (only tested with mosml and mlton)  
 Compile with:
 ```sh
 make install
