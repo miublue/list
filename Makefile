@@ -1,9 +1,8 @@
 OUT = list
-CC = mosmlc
 
 .PHONY: all
 all:
-	${CC} *.sml -o ${OUT}
+	mosmlc -standalone *.sml -o ${OUT}
 
 .PHONY: clean
 clean:

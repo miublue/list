@@ -7,8 +7,10 @@ and list_dirs   = ref true
 and list_files  = ref true
 and path = ref ".";
 
+fun get_file_name f = List.last (String.tokens (fn c => c = #"/") f)
+
 fun print_help () =
-    (print ("usage: " ^ (CommandLine.name ()) ^ " [-h|-r|-p|-i|-f|-d] [path]\n");
+    (print ("usage: " ^ get_file_name (CommandLine.name ()) ^ " [-h|-r|-p|-i|-f|-d] [path]\n");
     OS.Process.exit OS.Process.success);
 
 fun parse_flags [] = ()
